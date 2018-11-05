@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-media {
+				font-size: 14px;
+			}
+			
+			.mui-table-view .mui-media-object {
+				max-width: initial;
+				width: 75%;
+			}
+			
+			.meta-info {
+				position: absolute;
+				left: 115px;
+				right: 15px;
+				bottom: 8px;
+				color: #8f8f94;
+			}
+			
+			.meta-info .author,
+			.meta-info .time {
+				display: inline-block;
+			}
+			
+			.meta-info .time {
+				float: right;
+			}
+			
+			.mui-table-view:before,
+			.mui-table-view:after {
+				height: 0;
+			}
+			
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 1px;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div id="slider3" class="mui-slider">
+				<div id="sliderSegmentedControl3" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="subTabMain" class="mui-scroll">
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="mui-content" id="news">
+			<!--列表信息流 开始-->
+			<div id="list" class="mui-scroll-wrapper">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media" v-for="item in items">
+						<a href="javascript:;" :data-guid="item.guid" @tap="open_detail(item)">
+							<!--img class="mui-media-object mui-pull-left" :src="item.cover"-->
+							<div class="mui-media-body mui-media-object">
+								<div class="mui-ellipsis-2">{{item.title}}</div>
+							</div>
+							<div class="meta-info">
+								<!--div class="author">{{item.author}}</div-->
+								<div class="time">{{item.time}}</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!--列表信息流 结束-->
+		</div>
+		<script src="../js/config.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			// TODO 这里在android 下会报错
+			var self = plus.webview.currentWebview();
+			var index = self.opener();
+			var cid = self.cid;
+			var curl = self.curl;
+			var tabHtml = "";
+			for(i = 1; i <= self.cchilds.length; i++) {
+				if(i == 1) {
+					tabHtml = '<a class="mui-control-item mui-active" href="#item' + i + 'mobile" data-wid="listview-' + i + '" cid="' + self.cchilds[i - 1].id + '">' + self.cchilds[i - 1].name + '</a>';
+				} else {
+					tabHtml += '<a class="mui-control-item" href="#item' + i + 'mobile" data-wid="listview-' + i + '" cid="' + self.cchilds[i - 1].id + '">' + self.cchilds[i - 1].name + '</a>';
+				}
+			}
+			document.getElementById("subTabMain").innerHTML = tabHtml;
+			var pageNum = 1;
+			var pageSize = 5;
+			var webview_detail = null; //详情页webview
+			var news = new Vue({
+				el: '#news',
+				data: {
+					items: [] //列表信息流数据
+				}
+			});
+			var titleNView = { //详情页原生导航配置
+				backgroundColor: '#f7f7f7', //导航栏背景色
+				titleText: '', //导航栏标题
+				titleColor: '#000000', //文字颜色
+				type: 'transparent', //透明渐变样式
+				autoBackButton: true, //自动绘制返回箭头
+				splitLine: { //底部分割线
+					color: '#cccccc'
+				}
+			}
+
+			//mui初始化，配置下拉刷新
+			mui.init({
+				pullRefresh: {
+					container: '#list',
+					down: {
+						offset: '0px',
+						callback: pulldownRefresh
+					},
+					up: {
+						auto: true, // 启动时自动加载
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			/**
+			 *  下拉刷新获取最新列表 
+			 */
+			function pulldownRefresh() {
+
+				if(window.plus && plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
+					plus.nativeUI.toast('似乎已断开与互联网的连接', {
+						verticalAlign: 'top'
+					});
+					return;
+				}
+
+				var data = {
+					fenlei: cid,
+					pageSize: pageSize,
+					pageNo: 1
+				}
+
+				//请求最新列表信息流
+				mui.getJSON(baserUrl + curl, data, function(rsp) {
+					// 清空历史
+					news.items = [];
+					// 因为请求最新的就是请求第一页，所有需要重置页码为第2页给请求历史使用
+					pageNum = 2;
+					if(rsp && rsp.length > 0) {
+						if(rsp[0].code == 200) {
+							var datas = rsp[0].appMsg;
+							if(datas) {
+								news.items = convert(datas);
+							}
+						}
+					}
+					mui('#list').pullRefresh().endPulldownToRefresh();
+				});
+			}
+
+			/**
+			 * 上拉加载拉取历史列表 
+			 */
+			function pullupRefresh() {
+				if(window.plus && plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
+					plus.nativeUI.toast('似乎已断开与互联网的连接', {
+						verticalAlign: 'top'
+					});
+					return;
+				}
+				var data = {
+					fenlei: cid,
+					pageSize: pageSize,
+					pageNo: pageNum
+				}
+
+				//请求历史列表信息流
+				mui.getJSON(baserUrl + curl, data, function(rsp) {
+					if(rsp && rsp.length > 0) {
+						if(rsp[0].code == 200) {
+							var datas = rsp[0].appMsg;
+							if(datas) {
+								pageNum++;
+								convert(datas).forEach(function(item) {
+									news.items.push(item);
+								});
+							}
+						}
+					}
+					mui('#list').pullRefresh().endPullupToRefresh();
+				});
+			}
+
+			mui.plusReady(function() {
+				//预加载详情页
+				webview_detail = mui.preload({
+					url: 'detail.html',
+					id: 'news_detail',
+					styles: {
+						"render": "always",
+						"popGesture": "hide",
+						"bounce": "vertical",
+						"bounceBackground": "#efeff4",
+						"titleNView": titleNView
+					}
+				});
+			});
+
+			/**
+			 * 打开新闻详情
+			 * 
+			 * @param {Object} item 当前点击的新闻对象
+			 */
+			function open_detail(item) {
+				//触发子窗口变更新闻详情
+				mui.fire(webview_detail, 'get_detail', {
+					guid: item.guid,
+					title: item.title,
+					author: item.author,
+					time: item.time,
+					cover: item.cover
+				});
+
+				//更改详情页原生导航条信息
+				titleNView.titleText = item.title;
+				webview_detail.setStyle({
+					"titleNView": titleNView
+				});
+				setTimeout(function() {
+					webview_detail.show("slide-in-right", 300);
+				}, 150);
+			}
+
+			/**
+			 * 1、将服务端返回数据，转换成前端需要的格式
+			 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
+			 * 
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						guid: item.newsUrl,
+						title: item.newsTitle,
+						author: "admin",
+						cover: "../images/timg.jpeg",
+						time: item.time
+					});
+				});
+				return newItems;
+			}
+
+			mui("#subTabMain").on("tap", ".mui-control-item", function(e) {
+				var cid = this.getAttribute("cid");
+				var data = {
+					fenlei: cid,
+					pageSize: pageSize,
+					pageNo: 1
+				}
+				//请求历史列表信息流
+				mui.getJSON(baserUrl + curl, data, function(rsp) {
+					news.items = [];
+					pageNum = 1;
+					if(rsp && rsp.length > 0) {
+						if(rsp[0].code == 200) {
+							var datas = rsp[0].appMsg;
+							if(datas) {
+								convert(datas).forEach(function(item) {
+									news.items.push(item);
+								});
+							}
+						}
+					}
+					mui('#list').pullRefresh().endPullupToRefresh();
+				});
+			});
+		</script>
+	</body>
+
+</html>

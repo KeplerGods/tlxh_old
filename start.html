@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			#close {
+				position: absolute;
+				width: 60px;
+				height: 40px;
+				right: 5%;
+				margin-left: -80px;
+				top: 5%;
+				padding: 8px;
+				color: #fff;
+				border-color: #fff;
+			}
+			
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="slider" class="mui-slider mui-fullscreen" style="background-color: black;">
+			<div class="mui-slider-group">
+				<div class="mui-slider-item">
+					<img id="homeImage" src="images/adImg/ad2.png">
+					<button id='close' class="mui-btn mui-btn-warning mui-btn-outlined">跳过</button>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.back = function() {};
+			mui.plusReady(function() {
+				plus.navigator.closeSplashscreen();
+				plus.navigator.setFullscreen(true);
+				//立即体验按钮点击事件
+				document.getElementById("close").addEventListener('tap', function(event) {
+					indexShow();
+				}, false);
+				//点击图片
+				document.getElementById("homeImage").addEventListener('tap', function(event) {
+					plus.runtime.openWeb("https://baidu.com");
+				}, false);
+				setTimeout(indexShow, 3000);
+				function indexShow() {
+					plus.navigator.setFullscreen(false);
+					plus.webview.currentWebview().hide();
+					mui.openWindow({
+						url: "index.html",
+						id: "index",
+						show: {
+							aniShow: 'none'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				}
+			});
+		</script>
+	</body>
+
+</html>

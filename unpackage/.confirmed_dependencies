@@ -1,0 +1,22 @@
+{
+  "index.html": {
+    "resources": [
+      "news/listview.html"
+    ],
+    "refer": [
+      "news/listview.html",
+      "user-menu.html"
+    ]
+  },
+  "start.html": {
+    "refer": [
+      "index.html"
+    ],
+    "resources": []
+  },
+  "news/listview.html": {
+    "refer": [
+      "news/detail.html"
+    ]
+  }
+}
