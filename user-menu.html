@@ -11,7 +11,7 @@
 		<link href="css/style.css" rel="stylesheet" />
 		<style type="text/css">
 			.mui-table-view a {
-				font-size: 16px;
+				font-size: 20px;
 			}
 			
 			#userHead {
@@ -24,8 +24,8 @@
 			}
 			
 			#userHead img {
-				width: 60px;
-				height: 60px;
+				width: 70px;
+				height: 70px;
 				border-radius: calc(50%);
 			}
 			
@@ -35,14 +35,14 @@
 				font-weight: 450;
 				position: absolute;
 				top: 30%;
-				left: 34%;
+				left: 40%;
 			}
 		</style>
 	</head>
 
 	<body>
 		<div class="mui-content">
-			<div id="userHead"><img src="images/user_head.jpg" /><span>狼</span></div>
+			<div id="userHead"><img src="images/user_head.jpg" /><span id="nickname">狼</span></div>
 			<div id="slider" class="mui-slider">
 				<div class="mui-slider-group">
 					<div class="mui-slider-item mui-slider-item-duplicate">
@@ -53,22 +53,22 @@
 				</div>
 			</div>
 			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell login" t="login">
 					<a class="mui-icon mui-icon-contact">
 						登录
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell question" t="question">
 					<a class="mui-icon mui-icon-compose">
 						问题反馈
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-icon mui-icon-bars">
+				<!--<li class="mui-table-view-cell">
+					<a class="mui-icon mui-icon-settings setting">
 						设置
 					</a>
-				</li>
-				<li class="mui-table-view-cell mui-hidden">
+				</li>-->
+				<li class="mui-table-view-cell logout mui-hidden" t="logout">
 					<a class="mui-icon mui-icon-closeempty">
 						退出
 					</a>
@@ -86,8 +86,23 @@
 					span.style.display = "none";
 				}
 			}
+			window.addEventListener('update', function() {
+				mui(".logout")[0].classList.remove('mui-hidden');
+				mui(".login")[0].classList.add('mui-hidden');
+				var user = JSON.parse(localStorage.getItem("$state") || "{}");
+				document.getElementById("nickname").innerText = user.account;
+			}, false);
 			var index = null;
 			mui.plusReady(function() {
+				document.getElementById("nickname").innerText = "未登录";
+				// 如果已登录则隐藏登录按钮
+				var user = JSON.parse(localStorage.getItem("$state") || "{}");
+				if(user.account) {
+					mui(".logout")[0].classList.remove('mui-hidden');
+					mui(".login")[0].classList.add('mui-hidden');
+					document.getElementById("nickname").innerHTML = user.account;
+				}
+
 				//获得主页面webview引用；
 				index = plus.webview.currentWebview().opener();
 				var _self = plus.webview.currentWebview();
@@ -98,6 +113,33 @@
 					view: index,
 					moveMode: "follow"
 				}, function(e) {});
+				var login = mui.preload({
+					"id": 'login',
+					"url": 'menu_sub/login.html'
+				});
+				var question = mui.preload({
+					"id": 'question',
+					"url": 'menu_sub/question.html'
+				});
+				mui(".mui-table-view").on("tap", ".mui-table-view-cell", function(e) {
+					var t = this.getAttribute("t")
+					switch(t) {
+						case "login":
+							login.show("slide-in-right", 300);
+							break;
+						case "question":
+							question.show("slide-in-right", 300);
+							break;
+						case "logout":
+							localStorage.removeItem("$state");
+							mui(".logout")[0].classList.add('mui-hidden');
+							mui(".login")[0].classList.remove('mui-hidden');
+							document.getElementById("nickname").innerText = "未登录";
+							break;
+						case "setting":
+							break
+					}
+				})
 			})
 		</script>
 	</body>

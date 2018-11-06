@@ -41,7 +41,6 @@
 			.mui-content>.mui-table-view:first-child {
 				margin-top: 1px;
 			}
-			
 		</style>
 	</head>
 
@@ -117,10 +116,11 @@
 				pullRefresh: {
 					container: '#list',
 					down: {
-						offset: '0px',
+						style:'circle',
 						callback: pulldownRefresh
 					},
 					up: {
+						style:'circle',
 						auto: true, // 启动时自动加载
 						callback: pullupRefresh
 					}
@@ -263,22 +263,26 @@
 					pageSize: pageSize,
 					pageNo: 1
 				}
-				//请求历史列表信息流
-				mui.getJSON(baserUrl + curl, data, function(rsp) {
-					news.items = [];
-					pageNum = 1;
-					if(rsp && rsp.length > 0) {
-						if(rsp[0].code == 200) {
-							var datas = rsp[0].appMsg;
-							if(datas) {
-								convert(datas).forEach(function(item) {
-									news.items.push(item);
-								});
+				var w=plus.nativeUI.showWaiting("加载中...")
+				setTimeout(function() {
+					//请求历史列表信息流
+					mui.getJSON(baserUrl + curl, data, function(rsp) {
+						news.items = [];
+						pageNum = 1;
+						if(rsp && rsp.length > 0) {
+							if(rsp[0].code == 200) {
+								var datas = rsp[0].appMsg;
+								if(datas) {
+									convert(datas).forEach(function(item) {
+										news.items.push(item);
+									});
+								}
 							}
 						}
-					}
-					mui('#list').pullRefresh().endPullupToRefresh();
-				});
+						mui('#list').pullRefresh().endPullupToRefresh();
+						w.close();
+					});
+				}, 100)
 			});
 		</script>
 	</body>
