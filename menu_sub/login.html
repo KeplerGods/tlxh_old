@@ -121,10 +121,11 @@
 				《地方铁路社区》
 			</div>
 		</div>
-		<script type="text/javascript" src="../js/config.js" ></script>
+		<script type="text/javascript" src="../js/config.js"></script>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/app.js"></script>
 		<script type="text/javascript" src="../js/mui.enterfocus.js"></script>
+		<script type="text/javascript" src="../js/MD5.js"></script>
 		<script>
 			(function($, doc) {
 				$.init({
@@ -136,9 +137,15 @@
 					var state = app.getState();
 					var mainPage = plus.webview.currentWebview().opener();
 					var toMain = function() {
+						plus.nativeUI.toast("登录成功", {
+							"align": "center",
+							"verticalAlign": "center"
+						});
 						// 关闭当前页面
-						$.fire(mainPage, 'update', null);
-						plus.webview.currentWebview().hide();
+						setTimeout(function() {
+							$.fire(mainPage, 'update', null);
+							plus.webview.currentWebview().hide();
+						}, 800)
 					};
 
 					//检查 "登录状态/锁屏状态" 结束
@@ -158,8 +165,9 @@
 									"verticalAlign": "center"
 								});
 								return;
+							} else {
+								toMain();
 							}
-							toMain();
 						});
 					});
 					$.enterfocus('#login-form input', function() {

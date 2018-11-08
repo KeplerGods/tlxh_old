@@ -14,7 +14,7 @@
 			return callback('密码最短为 6 个字符');
 		}
 		var w = plus.nativeUI.showWaiting("登录中...");
-		mui.ajax(loginUrl + '?USER_NAME=' + loginInfo.account + '&USER_PWD=' + loginInfo.password + '', {
+		mui.ajax(loginUrl + '?USER_NAME=' + loginInfo.account + '&USER_PWD=' + md5(loginInfo.password) + '', {
 			data: {
 
 			},
@@ -23,9 +23,9 @@
 			timeout: 5000, //超时时间设置为5秒；
 			success: function(data) {
 				w.close();
-				if(data.msg == "登录成功") {
-					callback();
+				if(data.code === 2) {
 					localStorage.setItem('$state', JSON.stringify(loginInfo));
+					callback();
 				} else {
 					callback(data.msg);
 				}
