@@ -58,19 +58,29 @@
 						登录
 					</a>
 				</li>
+				<li class="mui-table-view-cell about" t="about">
+					<a class="mui-icon mui-icon-help">
+						关于我们
+					</a>
+				</li>
 				<li class="mui-table-view-cell question" t="question">
 					<a class="mui-icon mui-icon-compose">
 						问题反馈
 					</a>
 				</li>
 				<!--<li class="mui-table-view-cell">
-					<a class="mui-icon mui-icon-settings setting">
+					<a class="mui-icon mui-icon-gear setting">
 						设置
 					</a>
 				</li>-->
+				<li class="mui-table-view-cell dev" t="dev">
+					<a class="mui-icon mui-icon-email">
+						关于开发者
+					</a>
+				</li>
 				<li class="mui-table-view-cell logout mui-hidden" t="logout">
 					<a class="mui-icon mui-icon-closeempty">
-						退出
+						登出
 					</a>
 				</li>
 			</ul>
@@ -121,13 +131,23 @@
 					"id": 'question',
 					"url": 'menu_sub/question.html'
 				});
+				var about = mui.preload({
+					"id": 'about',
+					"url": 'menu_sub/about.html'
+				});
 				mui(".mui-table-view").on("tap", ".mui-table-view-cell", function(e) {
 					var t = this.getAttribute("t")
 					switch(t) {
 						case "login":
 							login.show("slide-in-right", 300);
 							break;
+						case "about":
+							about.show("slide-in-right", 300);
+							break;
 						case "question":
+							question.show("slide-in-right", 300);
+							break;
+						case "dev":
 							question.show("slide-in-right", 300);
 							break;
 						case "logout":

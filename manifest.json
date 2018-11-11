@@ -4,7 +4,7 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "com.huoan.tlxh",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"id": "com.ai8s.tlxh",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "地方铁路协会",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",/*应用版本名称*/
@@ -127,7 +127,7 @@
 			"splashscreen": {
 				"ios": {
 					"iphone": {
-						"default": "","iphonex":"/Users/Aaron/Documents/AA/iPhoneX-Port.png","retina47":"/Users/Aaron/Documents/AA/Default-Port-hd47.png","retina35":"/Users/Aaron/Documents/AA/Default@2x.png","retina40":"/Users/Aaron/Documents/AA/Default-568h@2x.png","retina55":"/Users/Aaron/Documents/AA/Default-Port-hd55.png"
+						"default": "","iphonex":"tlxh_img/iPhoneX-Port.png","retina47":"tlxh_img/Default-Port-hd47.png","retina35":"tlxh_img/Default@2x.png","retina40":"tlxh_img/Default-568h@2x.png","retina55":"tlxh_img/Default-Port-hd55.png"
 					},
 					"ipad": {
 						 /*iPad竖屏启动图片，分辨率：768x1004*/
@@ -142,10 +142,7 @@
 				},
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
-					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "/Users/Aaron/Documents/android_start.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "/Users/Aaron/Documents/android_start.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "/Users/Aaron/Documents/android_start.png"
+					"ldpi": ""
 				}
 			}
 		}
