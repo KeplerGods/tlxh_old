@@ -80,7 +80,7 @@
 				</li>
 				<li class="mui-table-view-cell logout mui-hidden" t="logout">
 					<a class="mui-icon mui-icon-closeempty">
-						登出
+						退出账号
 					</a>
 				</li>
 			</ul>
@@ -135,6 +135,10 @@
 					"id": 'about',
 					"url": 'menu_sub/about.html'
 				});
+				var dev = mui.preload({
+					"id": 'dev',
+					"url": 'menu_sub/dev.html'
+				});
 				mui(".mui-table-view").on("tap", ".mui-table-view-cell", function(e) {
 					var t = this.getAttribute("t")
 					switch(t) {
@@ -148,7 +152,7 @@
 							question.show("slide-in-right", 300);
 							break;
 						case "dev":
-							question.show("slide-in-right", 300);
+							dev.show("slide-in-right", 300);
 							break;
 						case "logout":
 							localStorage.removeItem("$state");

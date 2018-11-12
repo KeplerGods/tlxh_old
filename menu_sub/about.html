@@ -6,55 +6,97 @@
 		<title>关于我们</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/comm.css" />
 		<style type="text/css">
-			.logo {
-				width: 100%;
-				height: 200px;
+			
+			.comm-bottom {
+				margin-top: calc(40%);
 				text-align: center;
-				line-height: 200px;
+				font-size: 14px;
+				color: #777777;
 			}
-			.logo img {
-				height: 120px;
-				width: 120px;
+			
+			.msg {
+				margin-top: 14px;
+				margin-left: 5px;
+				margin-right: 5px;
+				font-size: 14px;
+				color: #777777;
+				text-align: center;
 			}
-			.logo span {
-				font-size: 12px;
+			
+			.mui-table-view .mui-table-view-cell a {
+				color: #333333
 			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">关于地方铁路协会</h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">关于地方铁路协会</h1>
 		</header>
 		<div class="mui-content">
 			<div class="logo">
-			    	<img src="../images/cbd.jpg" />
-			    	<span>《关于地方铁路协会》</span>
+				<div><img src="../images/logo.png" /></div>
+				<span>当前版本 v1.0.0</span>
 			</div>
-			  <ul class="mui-table-view">
-			          <li class="mui-table-view-cell">
-			              <a class="mui-navigate">
-			                  Item 1
-			              </a>
-			          </li>
-			          <li class="mui-table-view-cell">
-			              <a class="mui-navigate">
-			                   Item 2
-			              </a>
-			          </li>
-			          <li class="mui-table-view-cell">
-			              <a class="mui-navigate">
-			                   Item 3
-			              </a>
-			          </li>
-			      </ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" t="checkUpdate">
+					<a class="mui-navigate">
+						检查更新
+					</a>
+				</li>
+				<li class="mui-table-view-cell" t="otherApp">
+					<a class="mui-navigate">
+						其它应用
+					</a>
+				</li>
+				<li class="mui-table-view-cell" t="attention">
+					<a class="mui-navigate">
+						关注
+					</a>
+				</li>
+			</ul>
+			<div class="msg">很高兴您能使用地方铁路协会app，我们将持续为您推送更多新闻，望您生活愉快，O(∩_∩)O~~</div>
+			<div class="comm-bottom">《地方铁路协会》</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init()
+		mui.plusReady(function() {
+			mui(".mui-table-view").on("tap", ".mui-table-view-cell", function(e) {
+				var t = this.getAttribute("t")
+				switch(t) {
+					case "checkUpdate":
+						commToast("当前已是最新版本", "检查中...");
+						break;
+					case "otherApp":
+						commToast("暂无推荐", "检查中...");
+						break;
+					case "attention":
+						commToast("功能还在开发中", null, 1);
+						break;
+					default:
+						break;
+				}
+			});
+
+			function commToast(msg, pmsg, timeOut) {
+				var t = timeOut || 300;
+				var m = pmsg || "处理中..."
+				var styles = {
+					"align": "center",
+					"verticalAlign": "center"
+				};
+				var w = plus.nativeUI.showWaiting(m);
+				setTimeout(function() {
+					w.close();
+					plus.nativeUI.toast(msg, styles)
+				}, t);
+			}
+		})
 	</script>
 
 </html>
