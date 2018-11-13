@@ -169,7 +169,7 @@
 					width: '80%',
 					popGesture: "none",
 					render: "always",
-					hardwareAccelerated:true
+					hardwareAccelerated: true
 				};
 
 				if(mui.os.ios) {
@@ -189,11 +189,11 @@
 					}
 				});
 			};
-			
+
 			mui.plusReady(function() {
 				plus.navigator.setFullscreen(false);
 				_self = plus.webview.currentWebview();
-				mui(".mui-slider-loop").on("tap","img",function(){
+				mui(".mui-slider-loop").on("tap", "img", function() {
 					plus.runtime.openWeb("https://baidu.com");
 				});
 				var group = new webviewGroup(_self.id, {
