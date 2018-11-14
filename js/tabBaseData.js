@@ -139,6 +139,7 @@ tabsName = [{
 }];
 var tabs = new Array();
 var tabHtml = "";
+var user = JSON.parse(localStorage.getItem("$state") || "{}");
 for(i = 1; i <= tabsName.length; i++) {
 	tabs.push({
 		id: "listview-" + i,
@@ -149,10 +150,15 @@ for(i = 1; i <= tabsName.length; i++) {
 			cchilds: tabsName[i - 1].childs
 		}
 	});
+	var h = "";
+	if(!user.account && tabsName[i - 1].id == 0) {
+		//h = "mui-hidden";
+		// TODO 此处处理会员tab是否显示，现在有BUG
+	}
 	if(i == 1) {
-		tabHtml = '<a class="mui-control-item mui-active" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
+		tabHtml = '<a class="mui-control-item ' + h + ' mui-active" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
 	} else {
-		tabHtml += '<a class="mui-control-item" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
+		tabHtml += '<a class="mui-control-item ' + h + '" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
 	}
 }
 document.getElementById("tabMain").innerHTML = tabHtml;
