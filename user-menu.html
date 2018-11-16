@@ -96,6 +96,7 @@
 					span.style.display = "none";
 				}
 			}
+			var listenerInit = false;
 			window.addEventListener('update', function() {
 				mui(".logout")[0].classList.remove('mui-hidden');
 				mui(".login")[0].classList.add('mui-hidden');
@@ -118,7 +119,6 @@
 					mui(".logout")[0].classList.add('mui-hidden');
 					mui(".login")[0].classList.remove('mui-hidden');
 				}
-
 				//获得主页面webview引用；
 				index = plus.webview.currentWebview().opener();
 				var _self = plus.webview.currentWebview();
@@ -128,7 +128,20 @@
 				}, {
 					view: index,
 					moveMode: "follow"
-				}, function(e) {});
+				}, function(e) {
+					if(e.type == "end" && e.id == "index") {
+						index.setStyle({
+							mask: "none"
+						});
+					}
+				});
+
+				// 点击关闭遮罩层
+				index.addEventListener("maskClick", function() {
+					index.setStyle({
+						mask: "none"
+					});
+				}, false);
 				var login = mui.preload({
 					"id": 'login',
 					"url": 'menu_sub/login.html'

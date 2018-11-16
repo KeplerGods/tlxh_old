@@ -151,7 +151,7 @@ for(i = 1; i <= tabsName.length; i++) {
 		}
 	});
 	var h = "";
-	if(!user.account && tabsName[i - 1].id == 0) {
+	if(!user.account && tabsName[i - 1].id == 71) {
 		//h = "mui-hidden";
 		// TODO 此处处理会员tab是否显示，现在有BUG
 	}

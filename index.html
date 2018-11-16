@@ -190,6 +190,7 @@
 				});
 			};
 
+			var main = null;
 			mui.plusReady(function() {
 				plus.navigator.setFullscreen(false);
 				_self = plus.webview.currentWebview();
@@ -226,66 +227,13 @@
 						view: menu,
 						moveMode: "follow"
 					}, function(e) {
-						//console.log(JSON.stringify(e));
+						if(e.type == "start") {
+							_self.setStyle({
+								mask: "rgba(0,0,0,0.5)"
+							});
+						}
 					});
 				}, 350);
-				//重写mui.menu方法，Android版本menu按键按下可自动打开、关闭侧滑菜单；
-				mui.menu = function() {
-					if(parseInt(_self.getStyle().left) > 0) {
-						closeMenu();
-					} else {
-						openMenu();
-					}
-				}
-				/**
-				 * 显示侧滑菜单
-				 */
-				function openMenu() {
-					plus.webview.startAnimation({
-							'view': _self,
-							'styles': {
-								'fromLeft': '0',
-								'toLeft': "80%"
-							},
-							'action': 'show'
-						}, {
-							'view': menu,
-							'styles': {
-								'fromLeft': "-80%",
-								'toLeft': '0'
-							},
-							'action': 'show'
-						},
-						function(e) {
-							if(e.id == menu.id) { //侧滑菜单打开
-							}
-						}.bind(this)
-					)
-				};
-				/**
-				 * 关闭菜单
-				 */
-				function closeMenu() {
-					plus.webview.startAnimation({
-							'view': _self,
-							'styles': {
-								'fromLeft': '80%',
-								'toLeft': "0"
-							},
-							'action': 'show'
-						}, {
-							'view': menu,
-							'styles': {
-								'fromLeft': "0",
-								'toLeft': '-80%'
-							},
-							'action': 'show'
-						},
-						function(e) {
-							if(e.id == _self.id) {}
-						}.bind(this)
-					)
-				};
 			});
 		</script>
 	</body>
