@@ -1,5 +1,5 @@
 // 获取轮播图高度，35 是tab标题的高度
-var tH = document.getElementById("slider2").offsetHeight + 35;
+var tH = document.getElementById("slider2").offsetHeight + 45;
 var webviewGroup = function(id, options) {
 	this.id = id;
 	this.options = options;
