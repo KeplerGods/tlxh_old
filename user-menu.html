@@ -102,7 +102,12 @@
 				mui(".login")[0].classList.add('mui-hidden');
 				var user = JSON.parse(localStorage.getItem("$state") || "{}");
 				document.getElementById("nickname").innerText = user.account;
-				// TODO 此处处理父窗口的会员菜单
+				var menu_style = {
+					left: "0%",
+					width: '100%',
+					mask: "none"
+				}
+				index.setStyle(menu_style);
 			}, false);
 			var index = null;
 			mui.plusReady(function() {
@@ -141,9 +146,6 @@
 					var menu_style = {
 						left: "0%",
 						width: '100%',
-						popGesture: "hide",
-						render: "always",
-						hardwareAccelerated: true,
 						mask: "none"
 					}
 					index.setStyle(menu_style);
