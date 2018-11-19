@@ -138,9 +138,15 @@
 
 				// 点击关闭遮罩层
 				index.addEventListener("maskClick", function() {
-					index.setStyle({
+					var menu_style = {
+						left: "0%",
+						width: '100%',
+						popGesture: "hide",
+						render: "always",
+						hardwareAccelerated: true,
 						mask: "none"
-					});
+					}
+					index.setStyle(menu_style);
 				}, false);
 				var login = mui.preload({
 					"id": 'login',
