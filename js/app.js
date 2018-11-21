@@ -23,7 +23,7 @@
 			timeout: 5000, //超时时间设置为5秒；
 			success: function(data) {
 				w.close();
-				if(data.code === 2) {
+				if(data.code === 2||data.code === 1) {
 					localStorage.setItem('$state', JSON.stringify(loginInfo));
 					callback();
 				} else {
