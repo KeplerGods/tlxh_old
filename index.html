@@ -85,7 +85,8 @@
 			.mui-pull-top-canvas canvas {
 				width: 40px;
 			}
-			.tH{
+			
+			.tH {
 				height: 60px;
 			}
 		</style>
@@ -226,9 +227,10 @@
 						view: menu,
 						moveMode: "follow"
 					}, function(e) {
-						if(e.type == "start") {
+						if(e.type == "end" && e.result == true) {
+							var m = "rgba(0,0,0,0.5)" == _self.getStyle().mask ? "none" : "rgba(0,0,0,0.5)";
 							_self.setStyle({
-								mask: "rgba(0,0,0,0.5)"
+								mask: m
 							});
 						}
 					});

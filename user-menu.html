@@ -134,7 +134,7 @@
 					view: index,
 					moveMode: "follow"
 				}, function(e) {
-					if(e.type == "end" && e.id == "index") {
+					if(e.type == "end" && e.result == true) {
 						index.setStyle({
 							mask: "none"
 						});
