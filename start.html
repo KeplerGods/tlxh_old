@@ -46,26 +46,16 @@
 				plus.navigator.setFullscreen(true);
 				//立即体验按钮点击事件
 				document.getElementById("close").addEventListener('tap', function(event) {
-					indexShow();
+					close();
 				}, false);
 				//点击图片
 				document.getElementById("homeImage").addEventListener('tap', function(event) {
 					plus.runtime.openWeb("https://baidu.com");
 				}, false);
-				setTimeout(indexShow, 3000);
-				function indexShow() {
+				setTimeout(close, 3000);
+				function close() {
 					plus.navigator.setFullscreen(false);
-					plus.webview.currentWebview().hide();
-					mui.openWindow({
-						url: "index.html",
-						id: "index",
-						show: {
-							aniShow: 'none'
-						},
-						waiting: {
-							autoShow: false
-						}
-					});
+					plus.webview.currentWebview().close();
 				}
 			});
 		</script>
