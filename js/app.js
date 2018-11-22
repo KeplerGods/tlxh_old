@@ -24,6 +24,7 @@
 			success: function(data) {
 				w.close();
 				if(data.code === 2||data.code === 1) {
+					loginInfo.type=data.code;
 					localStorage.setItem('$state', JSON.stringify(loginInfo));
 					callback();
 				} else {

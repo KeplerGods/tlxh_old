@@ -137,27 +137,33 @@ tabsName = [{
 		name: "协会刊物"
 	}]
 }];
-var tabs = new Array();
-var tabHtml = "";
-var user = JSON.parse(localStorage.getItem("$state") || "{}");
-for(i = 1; i <= tabsName.length; i++) {
-	tabs.push({
-		id: "listview-" + i,
-		url: "news/listview.html",
-		extras: {
-			cid: tabsName[i - 1].id,
-			curl: tabsName[i - 1].curl,
-			cchilds: tabsName[i - 1].childs
+var tabs;
+
+function loadTab() {
+	tabs = new Array()
+	var tabHtml = "";
+	var user = JSON.parse(localStorage.getItem("$state") || "{}");
+	for(i = 1; i <= tabsName.length; i++) {
+		var h = "";
+		if((!user.account ||!user.type || user.type != 1) && tabsName[i - 1].id == "71") {
+			h = " mui-hidden ";
+		} else {
+			tabs.push({
+				id: "listview-" + i,
+				url: "news/listview.html",
+				extras: {
+					cid: tabsName[i - 1].id,
+					curl: tabsName[i - 1].curl,
+					cchilds: tabsName[i - 1].childs
+				}
+			});
 		}
-	});
-	var h = "";
-	if(!user.account && tabsName[i - 1].id == 71) {
-		h = "mui-hidden";
+
+		if(i == 1) {
+			tabHtml = '<a class="mui-control-item mui-active' + h + '" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
+		} else {
+			tabHtml += '<a class="mui-control-item' + h + '" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
+		}
 	}
-	if(i == 1) {
-		tabHtml = '<a class="mui-control-item ' + h + ' mui-active" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
-	} else {
-		tabHtml += '<a class="mui-control-item ' + h + '" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
-	}
+	document.getElementById("tabMain").innerHTML = tabHtml;
 }
-document.getElementById("tabMain").innerHTML = tabHtml;

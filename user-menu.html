@@ -108,6 +108,7 @@
 					mask: "none"
 				}
 				index.setStyle(menu_style);
+				refresh();
 			}, false);
 			var index = null;
 			mui.plusReady(function() {
@@ -186,12 +187,24 @@
 							mui(".logout")[0].classList.add('mui-hidden');
 							mui(".login")[0].classList.remove('mui-hidden');
 							document.getElementById("nickname").innerText = "未登录";
+							refresh();
 							break;
 						case "setting":
 							break
 					}
 				})
 			})
+
+			function refresh() {
+				plus.runtime.restart();
+//				var views = plus.webview.all();
+//				for(var i = 0; i < views.length - 1; i++) {
+//					if(views[i].id == "index") {
+//						views[i].reload();
+//						console.log(views[i].id)
+//					}
+//				}
+			}
 		</script>
 	</body>
 
