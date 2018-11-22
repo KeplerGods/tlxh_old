@@ -196,6 +196,8 @@
 			})
 
 			function refresh() {
+				// 关闭启动广告
+				localStorage.setItem("closeStart","1");
 				plus.runtime.restart();
 //				var views = plus.webview.all();
 //				for(var i = 0; i < views.length - 1; i++) {

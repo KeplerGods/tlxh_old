@@ -192,6 +192,7 @@
 
 			mui.plusReady(function() {
 				loadTab();
+				plus.navigator.closeSplashscreen();
 				plus.navigator.setFullscreen(false);
 				_self = plus.webview.currentWebview();
 				mui(".mui-slider-loop").on("tap", "img", function() {
