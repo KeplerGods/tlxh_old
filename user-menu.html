@@ -120,7 +120,11 @@
 					mui(".logout")[0].classList.remove('mui-hidden');
 					mui(".login")[0].classList.add('mui-hidden');
 					document.getElementById("nickname").innerHTML = user.account;
-				} else {
+				} else if(user.account) {
+					document.getElementById("nickname").innerHTML = user.account;
+					mui(".logout")[0].classList.remove('mui-hidden');
+					mui(".login")[0].classList.add('mui-hidden');
+				}else{
 					localStorage.removeItem("$state");
 					mui(".logout")[0].classList.add('mui-hidden');
 					mui(".login")[0].classList.remove('mui-hidden');
@@ -184,6 +188,7 @@
 							break;
 						case "logout":
 							localStorage.removeItem("$state");
+							localStorage.removeItem("$settings");
 							mui(".logout")[0].classList.add('mui-hidden');
 							mui(".login")[0].classList.remove('mui-hidden');
 							document.getElementById("nickname").innerText = "未登录";

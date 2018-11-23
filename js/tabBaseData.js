@@ -347,7 +347,6 @@ tabsName = [{
 	}]
 }];
 var tabs;
-
 function loadTab() {
 	tabs = new Array()
 	var tabHtml = "";

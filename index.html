@@ -89,7 +89,8 @@
 			.tH {
 				height: 60px;
 			}
-			#slider2 img{
+			
+			#slider2 img {
 				height: 220px;
 			}
 		</style>
@@ -102,21 +103,21 @@
 					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
-							<img :src="items[0].host + items[0].img">
+							<img :src="items[0].host + items[0].img" :clickUrl="items[0].host + items[0].clickUrl">
 							<p class="mui-slider-title">{{items[0].title}}</p>
 						</a>
 					</div>
 					<!-- 第一张 -->
 					<div class="mui-slider-item" v-for="item in items">
 						<a href="#">
-							<img :src="item.host + item.img">
+							<img :src="item.host + item.img" :clickUrl="item.host + item.clickUrl">
 							<p class="mui-slider-title">{{item.title}}</p>
 						</a>
 					</div>
 					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
-							<img :src="items[0].host + items[0].img">
+							<img :src="items[0].host + items[0].img" :clickUrl="items[0].host + items[0].clickUrl">
 							<p class="mui-slider-title">{{items[0].title}}</p>
 						</a>
 					</div>
@@ -173,29 +174,10 @@
 				el: '#slider2',
 				data: {
 					items: [{
-						host: "http://120.76.99.78:8087/TLXH/",
+						host: bannerUrl,
 						img: "resources/image/hdzs_1_20181120_104928.png",
-						detailId:0,
-						title: "静静看这世界",
-						active: "mui-active"
-					}, {
-						host: "",
-						img: "images/yuantiao.jpg",
-						detailId:0,
-						title: "静静看这世界",
-						active: ""
-					}, {
-						host: "",
-						img: "images/yuantiao.jpg",
-						detailId:0,
-						title: "静静看这世界",
-						active: ""
-					}, {
-						host: "",
-						img: "images/yuantiao.jpg",
-						detailId:0,
-						title: "静静看这世界",
-						active: ""
+						clickUrl: "index/flfg1",
+						title: "静静看这世界"
 					}] //轮播图列表
 				}
 			});
@@ -205,8 +187,23 @@
 				interval: 3000
 			});
 			mui.plusReady(function() {
-				loadTab();
+				//请求最新的banner
+				mui.getJSON("http://120.76.99.78:8087/TLXH/Hdzs/getHdzsList", {}, function(rsp) {
+					if(rsp && rsp.length > 0) {
+						// 清空历史
+						sliderImgs.items = [];
+						for(r in rsp) {
+							sliderImgs.items.push({
+								host: bannerUrl,
+								img: rsp[r].hdtpdz,
+								clickUrl: rsp[r].hdlj,
+								title: rsp[r].hdbt
+							});
+						}
+					}
+				});
 				if(localStorage.getItem("closeStart") != "1") {
+					localStorage.removeItem("$state");
 					mui.openWindow({
 						url: "start.html",
 						id: "start",
@@ -222,9 +219,11 @@
 					plus.navigator.setFullscreen(false);
 					localStorage.removeItem("closeStart")
 				}
+				loadTab();
 				_self = plus.webview.currentWebview();
 				mui(".mui-slider-loop").on("tap", "img", function() {
-					plus.runtime.openWeb("https://baidu.com");
+					console.log(this.getAttribute("clickUrl"))
+					plus.runtime.openWeb(this.getAttribute("clickUrl"));
 				});
 				var group = new webviewGroup(_self.id, {
 					items: tabs,
