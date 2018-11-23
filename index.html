@@ -89,6 +89,9 @@
 			.tH {
 				height: 60px;
 			}
+			#slider2 img{
+				height: 220px;
+			}
 		</style>
 	</head>
 
@@ -99,47 +102,27 @@
 					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
-							<img src="images/yuantiao.jpg">
-							<p class="mui-slider-title">静静看这世界</p>
+							<img :src="items[0].host + items[0].img">
+							<p class="mui-slider-title">{{items[0].title}}</p>
 						</a>
 					</div>
-					<div class="mui-slider-item">
+					<!-- 第一张 -->
+					<div class="mui-slider-item" v-for="item in items">
 						<a href="#">
-							<img src="images/shuijiao.jpg">
-							<p class="mui-slider-title">幸福就是可以一起睡觉</p>
-						</a>
-					</div>
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="images/muwu.jpg">
-							<p class="mui-slider-title">想要一间这样的木屋，静静的喝咖啡</p>
-						</a>
-					</div>
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="images/cbd.jpg">
-							<p class="mui-slider-title">Color of SIP CBD</p>
-						</a>
-					</div>
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="images/yuantiao.jpg">
-							<p class="mui-slider-title">静静看这世界</p>
+							<img :src="item.host + item.img">
+							<p class="mui-slider-title">{{item.title}}</p>
 						</a>
 					</div>
 					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
-							<img src="images/shuijiao.jpg">
-							<p class="mui-slider-title">幸福就是可以一起睡觉</p>
+							<img :src="items[0].host + items[0].img">
+							<p class="mui-slider-title">{{items[0].title}}</p>
 						</a>
 					</div>
 				</div>
 				<div class="mui-slider-indicator mui-text-right">
-					<div class="mui-indicator mui-active"></div>
-					<div class="mui-indicator"></div>
-					<div class="mui-indicator"></div>
-					<div class="mui-indicator"></div>
+					<div class="mui-indicator" v-for="item in items"></div>
 				</div>
 			</div>
 			<div id="slider" class="mui-slider">
@@ -156,10 +139,6 @@
 		<script src="js/webviewGroup.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
-			var slider2 = mui("#slider2");
-			slider2.slider({
-				interval: 3000
-			});
 			var menu = null;
 			var _self = null;
 			//初始化，并预加载webview模式的选项卡			
@@ -190,6 +169,41 @@
 				});
 			};
 
+			sliderImgs = new Vue({
+				el: '#slider2',
+				data: {
+					items: [{
+						host: "http://120.76.99.78:8087/TLXH/",
+						img: "resources/image/hdzs_1_20181120_104928.png",
+						detailId:0,
+						title: "静静看这世界",
+						active: "mui-active"
+					}, {
+						host: "",
+						img: "images/yuantiao.jpg",
+						detailId:0,
+						title: "静静看这世界",
+						active: ""
+					}, {
+						host: "",
+						img: "images/yuantiao.jpg",
+						detailId:0,
+						title: "静静看这世界",
+						active: ""
+					}, {
+						host: "",
+						img: "images/yuantiao.jpg",
+						detailId:0,
+						title: "静静看这世界",
+						active: ""
+					}] //轮播图列表
+				}
+			});
+			// 这个必须在vue初始化数据的后面
+			var slider2 = mui("#slider2");
+			slider2.slider({
+				interval: 3000
+			});
 			mui.plusReady(function() {
 				loadTab();
 				if(localStorage.getItem("closeStart") != "1") {
