@@ -256,12 +256,12 @@ tabsName = [{
 		}
 	]
 }, {
-	id: "2",
+	id: "10",
 	show: true,
 	name: "行业资讯",
 	curl: "/appData",
 	childs: [{
-		id: "2",
+		id: "10",
 		show: true,
 		name: "行业资讯"
 	}]

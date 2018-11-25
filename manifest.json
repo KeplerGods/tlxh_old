@@ -7,7 +7,7 @@
 	"id": "com.huoan.tlxh",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "地方铁路协会",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.0",/*应用版本名称*/
+		"name": "1.0.1",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -68,10 +68,7 @@
 					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
 				]
 			},
-			"orientation": [
-				"portrait-primary",
-				"portrait-secondary"
-			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"orientation": ["portrait-primary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
@@ -129,7 +126,7 @@
 					"iphone": {
 						"default": "","iphonex":"tlxh_img/iPhoneX-Port.png","retina47":"tlxh_img/Default-Port-hd47.png","retina35":"tlxh_img/Default@2x.png","retina40":"tlxh_img/Default-568h@2x.png","retina55":"tlxh_img/Default-Port-hd55.png"
 					},
-					"ipad": {
+					"ipad": {"portrait7":"tlxh_img/pad/Default-Portrait-ns.png","portrait-retina":"tlxh_img/pad/Default-Portrait@2x.png","portrait-retina7":"tlxh_img/pad/Default-Portrait-ns@2x.png"
 						 /*iPad竖屏启动图片，分辨率：768x1004*/
 						/*iPad高分屏竖屏图片，分辨率：1536x2008*/
 						 /*iPad横屏启动图片，分辨率：1024x748*/
