@@ -284,20 +284,6 @@ tabsName = [{
 		name: "会员简介"
 	}]
 }, {
-	id: "51",
-	show: true,
-	name: "行业数据",
-	curl: "/appData",
-	childs: [{
-		id: "51",
-		show: true,
-		name: "交通数据"
-	}, {
-		id: "52",
-		show: true,
-		name: "地方铁路信息"
-	}]
-}, {
 	id: "61",
 	show: true,
 	name: "法律法规",
@@ -326,14 +312,18 @@ tabsName = [{
 		name: "统计信息"
 	}]
 }, {
-	id: "8",
+	id: "81",
 	show: true,
 	name: "精彩时刻",
 	curl: "/appData",
 	childs: [{
-		id: "8",
+		id: "81",
 		show: true,
-		name: "精彩时刻"
+		name: "活动视频"
+	},{
+		id: "82",
+		show: true,
+		name: "活动图片"
 	}]
 }, {
 	id: "9",
@@ -344,6 +334,16 @@ tabsName = [{
 		id: "9",
 		show: true,
 		name: "协会刊物"
+	}]
+},{
+	id: "3",
+	show: true,
+	name: "最新通知",
+	curl: "/appData",
+	childs: [{
+		id: "3",
+		show: true,
+		name: "最新通知"
 	}]
 }];
 var tabs;
