@@ -123,7 +123,7 @@
 					</div>
 				</div>
 				<div class="mui-slider-indicator mui-text-right">
-					<div class="mui-indicator" v-for="item in items"></div>
+					<div :class="item.clzz" v-for="item in items"></div>
 				</div>
 			</div>
 			<div id="slider" class="mui-slider">
@@ -142,7 +142,7 @@
 			mui.init();
 			var menu = null;
 			var _self = null;
-			//初始化，并预加载webview模式的选项卡			
+
 			function preload() {
 				var menu_style = {
 					left: "-80%",
@@ -174,51 +174,59 @@
 				el: '#slider2',
 				data: {
 					items: [{
-						host: bannerUrl,
-						img: "resources/image/hdzs_1_20181120_104928.png",
-						clickUrl: "index/flfg1",
+						host: "",
+						clzz: "mui-indicator mui-active",
+						img: "images/adImg/dbd.jpg",
+						clickUrl: "http://www.baidu.com",
 						title: "静静看这世界"
 					}] //轮播图列表
-				}
-			});
-			// 这个必须在vue初始化数据的后面
-			var slider2 = mui("#slider2");
-			slider2.slider({
-				interval: 3000
-			});
-			mui.plusReady(function() {
-				//请求最新的banner
-				mui.getJSON("http://120.76.99.78:8087/TLXH/Hdzs/getHdzsList", {}, function(rsp) {
-					if(rsp && rsp.length > 0) {
-						// 清空历史
-						sliderImgs.items = [];
-						for(r in rsp) {
-							sliderImgs.items.push({
-								host: bannerUrl,
-								img: rsp[r].hdtpdz,
-								clickUrl: rsp[r].hdlj,
-								title: rsp[r].hdbt
-							});
-						}
-					}
-				});
-				if(localStorage.getItem("closeStart") != "1") {
-					localStorage.removeItem("$state");
-					mui.openWindow({
-						url: "start.html",
-						id: "start",
-						show: {
-							aniShow: 'none'
-						},
-						waiting: {
-							autoShow: true
+				},
+				mounted: function() {
+					var _seft = this;
+					//请求最新的banner
+					mui.getJSON("http://120.76.99.78:8087/TLXH/Hdzs/getHdzsList", {}, function(rsp) {
+						if(rsp && rsp.length > 0) {
+							// 清空历史
+							_seft.items = [];
+							for(r in rsp) {
+								var clzz = "mui-indicator";
+								if(r == 0) {
+									clzz += " mui-active";
+								}
+								_seft.items.push({
+									clzz: clzz,
+									host: bannerUrl,
+									img: rsp[r].hdtpdz,
+									clickUrl: rsp[r].hdlj,
+									title: rsp[r].hdbt
+								});
+							}
 						}
 					});
+				},
+				updated: function() {
+					mui("#slider2").slider({
+						interval: 3000
+					});
+				}
+			});
+
+			mui.plusReady(function() {
+				plus.navigator.closeSplashscreen();
+				plus.navigator.setFullscreen(false);
+				if(localStorage.getItem("closeStart") != "1") {
+					localStorage.removeItem("$state");
+					//					mui.openWindow({
+					//						url: "start.html",
+					//						id: "start",
+					//						show: {
+					//							aniShow: 'none'
+					//						}
+					//					});
 				} else {
-					plus.navigator.closeSplashscreen();
-					plus.navigator.setFullscreen(false);
 					localStorage.removeItem("closeStart")
 				}
+
 				loadTab();
 				_self = plus.webview.currentWebview();
 				mui(".mui-slider-loop").on("tap", "img", function() {
