@@ -19,13 +19,13 @@
 }
 
 /*无需重复显示大图*/
-#kr-article-article img.fr-fin.fr-dib.fr-tag{
-	display: none;
+/*#kr-article-article img.fr-fin.fr-dib.fr-tag{
+	display: "";
 }
 
 #kr-article-article p img:first-child{
-	display: none;
-}
+	display: "";
+}*/
 
 .kr-article .kr-slider a .mui-slider-title {
 	background: transparent;
