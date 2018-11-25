@@ -112,20 +112,13 @@
 			}, false);
 			var index = null;
 			mui.plusReady(function() {
-				document.getElementById("nickname").innerText = "未登录";
-				// 如果已登录则隐藏登录并且是自动登录按钮
 				var user = JSON.parse(localStorage.getItem("$state") || "{}");
-				var settings = JSON.parse(localStorage.getItem("$settings") || "{}");
-				if(user.account && settings.autoLogin) {
+				if(user.account) {
 					mui(".logout")[0].classList.remove('mui-hidden');
 					mui(".login")[0].classList.add('mui-hidden');
 					document.getElementById("nickname").innerHTML = user.account;
-				} else if(user.account) {
-					document.getElementById("nickname").innerHTML = user.account;
-					mui(".logout")[0].classList.remove('mui-hidden');
-					mui(".login")[0].classList.add('mui-hidden');
-				}else{
-					localStorage.removeItem("$state");
+				} else {
+					document.getElementById("nickname").innerText = "未登录";
 					mui(".logout")[0].classList.add('mui-hidden');
 					mui(".login")[0].classList.remove('mui-hidden');
 				}
@@ -202,7 +195,7 @@
 
 			function refresh() {
 				// 关闭启动广告
-				localStorage.setItem("closeStart","1")
+				localStorage.setItem("closeStart", "1")
 				plus.runtime.restart();
 			}
 		</script>

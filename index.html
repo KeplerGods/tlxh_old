@@ -215,7 +215,10 @@
 				plus.navigator.closeSplashscreen();
 				plus.navigator.setFullscreen(false);
 				if(localStorage.getItem("closeStart") != "1") {
-					localStorage.removeItem("$state");
+					var setting=JSON.parse(localStorage.getItem("$settings")||"{}");
+					if(!setting.autoLogin){
+						localStorage.removeItem("$state");
+					}
 					//					mui.openWindow({
 					//						url: "start.html",
 					//						id: "start",
