@@ -305,11 +305,32 @@ tabsName = [{
 	id: "71",
 	show: true,
 	name: "统计信息",
-	curl: "/appData",
+	curl: "/yunshu/list",
 	childs: [{
-		id: "71",
+		id: "yunshu",
+		curl: "/yunshu/list",
 		show: true,
-		name: "统计信息"
+		name: "运输企业"
+	},{
+		id: "sheji",
+		curl: "/sheji/list",
+		show: true,
+		name: "设计企业"
+	},{
+		id: "jianshe",
+		curl: "/jianshe/list",
+		show: true,
+		name: "建设企业"
+	},{
+		id: "touzi",
+		curl: "/touzi/list",
+		show: true,
+		name: "投资企业"
+	},{
+		id: "qita",
+		curl: "/qita/qitalist",
+		show: true,
+		name: "其它企业"
 	}]
 }, {
 	id: "81",
@@ -320,7 +341,7 @@ tabsName = [{
 		id: "81",
 		show: true,
 		name: "活动视频"
-	},{
+	}, {
 		id: "82",
 		show: true,
 		name: "活动图片"
@@ -335,7 +356,7 @@ tabsName = [{
 		show: true,
 		name: "协会刊物"
 	}]
-},{
+}, {
 	id: "3",
 	show: true,
 	name: "最新通知",
@@ -347,6 +368,7 @@ tabsName = [{
 	}]
 }];
 var tabs;
+
 function loadTab() {
 	tabs = new Array()
 	var tabHtml = "";
@@ -354,23 +376,28 @@ function loadTab() {
 	for(i = 1; i <= tabsName.length; i++) {
 		var h = "";
 		if((!user.account || !user.type || user.type != 1) && tabsName[i - 1].id == "71") {
-			h = " mui-hidden ";
-		} else {
-			tabs.push({
-				id: "listview-" + i,
-				url: "news/listview.html",
-				extras: {
-					cid: tabsName[i - 1].id,
-					curl: tabsName[i - 1].curl,
-					cchilds: tabsName[i - 1].childs
-				}
-			});
+			continue;
 		}
+		var viewId = "view-" + i
+		var viewPage = "news/listview.html";
+		// 统计信息
+		if(tabsName[i - 1].id == "71"){
+			viewPage="news/statistics.html";
+		}
+		tabs.push({
+			id: viewId,
+			url: viewPage,
+			extras: {
+				cid: tabsName[i - 1].id,
+				curl: tabsName[i - 1].curl,
+				cchilds: tabsName[i - 1].childs
+			}
+		});
 
 		if(i == 1) {
-			tabHtml = '<a class="mui-control-item mui-active' + h + '" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
+			tabHtml = '<a class="mui-control-item mui-active" href="#item' + i + 'mobile" data-wid="view-' + i + '">' + tabsName[i - 1].name + '</a>';
 		} else {
-			tabHtml += '<a class="mui-control-item' + h + '" href="#item' + i + 'mobile" data-wid="listview-' + i + '">' + tabsName[i - 1].name + '</a>';
+			tabHtml += '<a class="mui-control-item" href="#item' + i + 'mobile" data-wid="view-' + i + '">' + tabsName[i - 1].name + '</a>';
 		}
 	}
 	document.getElementById("tabMain").innerHTML = tabHtml;

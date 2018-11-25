@@ -46,10 +46,8 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<div id="slider3" class="mui-slider">
-				<div id="sliderSegmentedControl3" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div id="subTabMain" class="mui-scroll">
-					</div>
+			<div id="sliderSegmentedControl3" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<div id="subTabMain" class="mui-scroll">
 				</div>
 			</div>
 		</header>
@@ -85,9 +83,9 @@
 			var tabHtml = "";
 			for(i = 1; i <= self.cchilds.length; i++) {
 				if(i == 1) {
-					tabHtml = '<a class="mui-control-item mui-active" href="#item' + i + 'mobile" data-wid="listview-' + i + '" cid="' + self.cchilds[i - 1].id + '">' + self.cchilds[i - 1].name + '</a>';
+					tabHtml = '<a class="mui-control-item mui-active" href="#item' + i + 'mobile" data-wid="view-' + i + '" cid="' + self.cchilds[i - 1].id + '">' + self.cchilds[i - 1].name + '</a>';
 				} else {
-					tabHtml += '<a class="mui-control-item" href="#item' + i + 'mobile" data-wid="listview-' + i + '" cid="' + self.cchilds[i - 1].id + '">' + self.cchilds[i - 1].name + '</a>';
+					tabHtml += '<a class="mui-control-item" href="#item' + i + 'mobile" data-wid="view-' + i + '" cid="' + self.cchilds[i - 1].id + '">' + self.cchilds[i - 1].name + '</a>';
 				}
 			}
 			document.getElementById("subTabMain").innerHTML = tabHtml;
@@ -119,7 +117,7 @@
 						callback: pulldownRefresh
 					},
 					up: {
-						style:'circle',
+						style: 'circle',
 						auto: true, // 启动时自动加载
 						callback: pullupRefresh
 					}
@@ -262,7 +260,7 @@
 					pageSize: pageSize,
 					pageNo: 1
 				}
-				var w=plus.nativeUI.showWaiting("加载中...")
+				var w = plus.nativeUI.showWaiting("加载中...")
 				setTimeout(function() {
 					//请求历史列表信息流
 					mui.getJSON(baserUrl + curl, data, function(rsp) {

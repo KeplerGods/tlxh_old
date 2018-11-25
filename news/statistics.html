@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			body {
+				padding: 3px 3px 3px 3px;
+			}
+			
+			table.gridtable {
+				width: 100%;
+				font-family: verdana, arial, sans-serif;
+				font-size: 12px;
+				color: #333333;
+				border-width: 1px;
+				border-color: #666666;
+				border-collapse: collapse;
+			}
+			
+			table.gridtable th {
+				border-width: 1px;
+				padding: 2px;
+				border-style: solid;
+				border-color: #666666;
+				background-color: #dedede;
+			}
+			
+			table.gridtable td {
+				border-width: 1px;
+				padding: 2px;
+				text-align: center;
+				border-style: solid;
+				border-color: #666666;
+				background-color: #ffffff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div id="sliderSegmentedControl4" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<div id="subTabMain2" class="mui-scroll">
+				</div>
+			</div>
+		</header>
+		<div class="mui-content">
+			<table id="info" class="gridtable">
+			</table>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/config.js"></script>
+	<script type="text/javascript">
+		mui.init()
+		var dataTable = {
+			"yunshu": {
+				title: {
+					"xianlu": "线路",
+					"yingyelicheng": "营业里程(公里)",
+					"keyunliang": "客运量(万人)",
+					"lkzzl": "旅客周转量(万人)",
+					"huoyunliang": "货运量(万吨)",
+					"hwzzl": "货物周转量(万吨)",
+					"hszzl": "换算周转量(万吨)"
+				},
+				totalKey: {
+					"xianlu": false,
+					"yingyelicheng": true,
+					"keyunliang": true,
+					"lkzzl": true,
+					"huoyunliang": true,
+					"hwzzl": true,
+					"hszzl": true
+				}
+			},
+			"sheji": {
+				title: {
+					"xiangmu": "设计项目名称",
+					"xianluchangdu": "线路长度(公里)",
+					"zongtouzi": "总投资(万元)",
+					"kyjsjjd": "可研及设计进度"
+				},
+				totalKey: {
+					"xiangmu": false,
+					"xianluchangdu": true,
+					"zongtouzi": true,
+					"kyjsjjd": true
+				}
+			},
+			"jianshe": {
+				title: {
+					"jsxmmc": "建设项目名称",
+					"xlcd": "线路长度(公里)",
+					"kgsj": "开工时间",
+					"jcsj": "建成时间",
+					"zongtouzi": "总投资(万元)",
+					"bnjhtz": "本年计划",
+					"bnwctz": "本年完成",
+					"klwctz": "开累完成"
+				},
+				totalKey: {
+					"jsxmmc": false,
+					"xlcd": true,
+					"kgsj": false,
+					"jcsj": false,
+					"zongtouzi": true,
+					"bnjhtz": true,
+					"bnwctz": true,
+					"klwctz": true
+				}
+			},
+			"touzi": {
+				title: {
+					"xiangmu": "投资项目",
+					"chuzie": "出资额(万元)",
+					"sjczdw": "所占股比(%)",
+					"kszgb": "实际出资到位(万元)"
+				},
+				totalKey: {
+					"xiangmu": false,
+					"chuzie": true,
+					"sjczdw": false,
+					"kszgb": true
+				}
+			},
+			"qita": {
+				title: {
+					"danwei": "单位",
+					"ndwczcz": "年度完成总产值(万元)",
+					"ndwctlsgjzbzzcz": "年度完成铁路施工及装备制造产值",
+					"lirun": "利润(万元)",
+					"shouru": "收入(万元)"
+				},
+				totalKey: {
+					"danwei": false,
+					"ndwczcz": true,
+					"ndwctlsgjzbzzcz": true,
+					"lirun": true,
+					"shouru": true
+				}
+			}
+		}
+		var self = null;
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview();
+			var tabHtml = "";
+			for(i = 1; i <= self.cchilds.length; i++) {
+				if(i == 1) {
+					tabHtml = '<a class="mui-control-item mui-active" href="#item' + i + 'mobile" data-wid="view-' + i + '" cid="' + self.cchilds[i - 1].id + '" curl="' + self.cchilds[i - 1].curl + '">' + self.cchilds[i - 1].name + '</a>';
+				} else {
+					tabHtml += '<a class="mui-control-item" href="#item' + i + 'mobile" data-wid="view-' + i + '" cid="' + self.cchilds[i - 1].id + '" curl="' + self.cchilds[i - 1].curl + '">' + self.cchilds[i - 1].name + '</a>';
+				}
+			}
+			document.getElementById("subTabMain2").innerHTML = tabHtml;
+		})
+
+		function checkNumber(val) {　　
+			var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
+			if(!re.test(val)) {　　　　
+				return false;
+			}
+			return true;
+		}
+		mui("#subTabMain2").on("tap", ".mui-control-item", function(e) {
+			var cid = this.getAttribute("cid");
+			var curl = this.getAttribute("curl");
+			var w = plus.nativeUI.showWaiting("加载中...")
+			//请求历史列表信息流
+			mui.getJSON(bannerUrl + curl, {}, function(rsp) {
+				if(rsp) {
+					if(rsp.status == 200) {
+						if(rsp.rows&&rsp.rows.item) {
+							var info = document.getElementById("info");
+							var t = dataTable[cid].title;
+							var items = rsp.rows.item;
+							var totalKey = dataTable[cid].totalKey;
+							var html = "";
+							var title = "<tr>";
+							for(i in t) {
+								title += "<th>" + t[i] + "</th>";
+							}
+							title += "</tr>";
+							html += title;
+							for(j in items) {
+								var row = "<tr>";
+								for(i in t) {
+									row += "<td>" + items[j][i] + "</td>";
+								}
+								row += "</tr>";
+								html += row;
+							}
+							var total = "<tr>";
+							var inx = 0;
+							for(k in totalKey) {
+								if(inx == 0) {
+									total += "<th>合计</th>";
+									inx++;
+									continue;
+								}
+								if(totalKey[k] == false) {
+									total += "<th>&nbsp;&nbsp;</th>";
+									continue;
+								}
+								var count = 0;
+								for(j in items) {
+									if(checkNumber(items[j][k])) {
+										count += parseFloat(items[j][k]);
+									}
+								}
+								total += "<th>" + count + "</th>";
+							}
+							total += "</tr>";
+							html += total;
+							info.innerHTML = html;
+						}
+					}
+				}
+				w.close();
+			});
+		});
+	</script>
+
+</html>

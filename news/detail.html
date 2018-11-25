@@ -59,6 +59,7 @@
 			//监听自定义事件，获取新闻详情
 			document.addEventListener('get_detail', function(event) {
 				var guid = event.detail.guid;
+				console.log(guid)
 				if(!guid) {
 					return;
 				}
@@ -78,7 +79,6 @@
 					},
 					error: function(xhr, type, errorThrown) {
 						mui.toast('获取文章内容失败');
-						//TODO 此处可以向服务端告警
 					}
 				});
 			});
