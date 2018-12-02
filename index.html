@@ -231,22 +231,25 @@
 				mounted: function() {
 					var _seft = this;
 					//请求最新的banner
-					mui.getJSON("http://120.76.99.78:8087/TLXH/Hdzs/getHdzsList", {}, function(rsp) {
+					mui.getJSON(bannerUrl+"/Hdzs/appHdzsList", {}, function(rsp) {
 						if(rsp && rsp.length > 0) {
 							// 清空历史
 							_seft.items = [];
-							for(r in rsp) {
-								var clzz = "mui-indicator";
-								if(r == 0) {
-									clzz += " mui-active";
+							if(rsp[0].code == "200") {
+								data=rsp[0].appMsg;
+								for(r in rsp[0].appMsg) {
+									var clzz = "mui-indicator";
+									if(r == 0) {
+										clzz += " mui-active";
+									}
+									_seft.items.push({
+										clzz: clzz,
+										host: "",
+										img: data[r].hdtpdz,
+										clickUrl: data[r].hdlj,
+										title: data[r].hdzt
+									});
 								}
-								_seft.items.push({
-									clzz: clzz,
-									host: bannerUrl,
-									img: rsp[r].hdtpdz,
-									clickUrl: rsp[r].hdlj,
-									title: rsp[r].hdbt
-								});
 							}
 						}
 					});

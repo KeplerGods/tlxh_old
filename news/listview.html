@@ -90,7 +90,7 @@
 			}
 			document.getElementById("subTabMain").innerHTML = tabHtml;
 			var pageNum = 1;
-			var pageSize = 10;
+			var pageSize = 5;
 			var webview_detail = null; //详情页webview
 			var news = new Vue({
 				el: '#news',
@@ -254,7 +254,7 @@
 			}
 
 			mui("#subTabMain").on("tap", ".mui-control-item", function(e) {
-				cid = this.getAttribute("cid");
+				var cid = this.getAttribute("cid");
 				var data = {
 					fenlei: cid,
 					pageSize: pageSize,
