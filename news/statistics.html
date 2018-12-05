@@ -156,6 +156,9 @@
 				}
 			}
 			document.getElementById("subTabMain2").innerHTML = tabHtml;
+			if(self.cchilds.length > 0) {
+				show(self.cchilds[0].id, self.cchilds[0].curl);
+			}
 		})
 
 		function checkNumber(val) {　　
@@ -168,12 +171,16 @@
 		mui("#subTabMain2").on("tap", ".mui-control-item", function(e) {
 			var cid = this.getAttribute("cid");
 			var curl = this.getAttribute("curl");
+			show(cid, curl);
+		});
+
+		function show(cid, curl) {
 			var w = plus.nativeUI.showWaiting("加载中...")
 			//请求历史列表信息流
 			mui.getJSON(bannerUrl + curl, {}, function(rsp) {
 				if(rsp) {
 					if(rsp.status == 200) {
-						if(rsp.rows&&rsp.rows.item) {
+						if(rsp.rows && rsp.rows.item) {
 							var info = document.getElementById("info");
 							var t = dataTable[cid].title;
 							var items = rsp.rows.item;
@@ -221,7 +228,7 @@
 				}
 				w.close();
 			});
-		});
+		}
 	</script>
 
 </html>
