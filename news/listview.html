@@ -41,6 +41,10 @@
 			.mui-content>.mui-table-view:first-child {
 				margin-top: 1px;
 			}
+			#contactId span{
+				font-size: 14px;
+				margin-left: 10px;
+			}
 		</style>
 	</head>
 
@@ -52,6 +56,15 @@
 			</div>
 		</header>
 		<div class="mui-content" id="news">
+			<div id="orgId" class="mui-hidden">
+				<img width="100%" src="../images/xhjgt.jpg" />
+			</div>
+			<div id="contactId" class="mui-hidden">
+				<br />
+				<span>受理协会会员问题，包括技术支持、投诉受理、建议反馈等。</span><br />
+				<span>客户服务热线:</span><br />
+				<span>EMAIL:dftlxh@china-railway.com.cn</span>
+			</div>
 			<!--列表信息流 开始-->
 			<div id="list" class="mui-scroll-wrapper">
 				<ul class="mui-table-view">
@@ -134,44 +147,44 @@
 					});
 					return;
 				}
+				if(cid == "04") {
 
-				var data = {
-					fenlei: cid,
-					pageSize: pageSize,
-					pageNo: 1
-				}
-				// 清空历史
-				news.items = [];
-				var w = plus.nativeUI.showWaiting("加载中...")
-				mui.ajax(baserUrl + curl, {
-					data: data,
-					dataType: 'json', //服务器返回json格式数据
-					type: 'get', //HTTP请求类型
-					timeout: 5000, //超时时间设置为5秒；
-					success: function(rsp) {
-						// 因为请求最新的就是请求第一页，所有需要重置页码为第2页给请求历史使用
-						pageNum = 2;
-						if(rsp && rsp.length > 0) {
-							if(rsp[0].code == 200) {
-								var datas = rsp[0].appMsg;
-								if(datas) {
-									news.items = convert(datas);
+				} else if(cid == "05") {
+
+				} else {
+					var data = {
+						fenlei: cid,
+						pageSize: pageSize,
+						pageNo: 1
+					}
+					// 清空历史
+					news.items = [];
+					var w = plus.nativeUI.showWaiting("加载中...")
+					mui.ajax(baserUrl + curl, {
+						data: data,
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 5000, //超时时间设置为5秒；
+						success: function(rsp) {
+							// 因为请求最新的就是请求第一页，所有需要重置页码为第2页给请求历史使用
+							pageNum = 2;
+							if(rsp && rsp.length > 0) {
+								if(rsp[0].code == 200) {
+									var datas = rsp[0].appMsg;
+									if(datas) {
+										news.items = convert(datas);
+									}
 								}
 							}
+							w.close();
+							mui('#list').pullRefresh().endPulldownToRefresh();
+						},
+						error: function(xhr, type, errorThrown) {
+							w.close();
 						}
-						if(news.items.length == 0) {
-							plus.nativeUI.toast("无信息", {
-								"align": "center",
-								"verticalAlign": "center"
-							})
-						}
-						w.close();
-						mui('#list').pullRefresh().endPulldownToRefresh();
-					},
-					error: function(xhr, type, errorThrown) {
-						w.close();
-					}
-				})
+					})
+				}
+
 			}
 
 			/**
@@ -184,42 +197,42 @@
 					});
 					return;
 				}
-				var data = {
-					fenlei: cid,
-					pageSize: pageSize,
-					pageNo: pageNum
-				}
-				var w = plus.nativeUI.showWaiting("加载中...")
-				mui.ajax(baserUrl + curl, {
-					data: data,
-					dataType: 'json', //服务器返回json格式数据
-					type: 'get', //HTTP请求类型
-					timeout: 5000, //超时时间设置为5秒；
-					success: function(rsp) {
-						if(rsp && rsp.length > 0) {
-							if(rsp[0].code == 200) {
-								var datas = rsp[0].appMsg;
-								if(datas) {
-									pageNum++;
-									convert(datas).forEach(function(item) {
-										news.items.push(item);
-									});
+				if(cid == "04") {
+
+				} else if(cid == "05") {
+
+				} else {
+					var data = {
+						fenlei: cid,
+						pageSize: pageSize,
+						pageNo: pageNum
+					}
+					var w = plus.nativeUI.showWaiting("加载中...")
+					mui.ajax(baserUrl + curl, {
+						data: data,
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 5000, //超时时间设置为5秒；
+						success: function(rsp) {
+							if(rsp && rsp.length > 0) {
+								if(rsp[0].code == 200) {
+									var datas = rsp[0].appMsg;
+									if(datas) {
+										pageNum++;
+										convert(datas).forEach(function(item) {
+											news.items.push(item);
+										});
+									}
 								}
 							}
+							w.close();
+							mui('#list').pullRefresh().endPullupToRefresh();
+						},
+						error: function(xhr, type, errorThrown) {
+							w.close();
 						}
-						if(news.items.length == 0) {
-							plus.nativeUI.toast("无信息", {
-								"align": "center",
-								"verticalAlign": "center"
-							})
-						}
-						w.close();
-						mui('#list').pullRefresh().endPullupToRefresh();
-					},
-					error: function(xhr, type, errorThrown) {
-						w.close();
-					}
-				})
+					})
+				}
 			}
 
 			mui.plusReady(function() {
@@ -285,43 +298,47 @@
 			mui("#subTabMain").on("tap", ".mui-control-item", function(e) {
 				// TODO 这块可能有BUG
 				cid = this.getAttribute("cid");
-				var data = {
-					fenlei: cid,
-					pageSize: pageSize,
-					pageNo: 1
-				}
-				var w = plus.nativeUI.showWaiting("加载中...")
-				news.items = [];
-				mui.ajax(baserUrl + curl, {
-					data: data,
-					dataType: 'json', //服务器返回json格式数据
-					type: 'get', //HTTP请求类型
-					timeout: 5000, //超时时间设置为5秒；
-					success: function(rsp) {
-						pageNum = 1;
-						if(rsp && rsp.length > 0) {
-							if(rsp[0].code == 200) {
-								var datas = rsp[0].appMsg;
-								if(datas) {
-									convert(datas).forEach(function(item) {
-										news.items.push(item);
-									});
+				if(cid == "04") {
+					mui("#contactId")[0].classList.remove('mui-hidden');
+					mui("#orgId")[0].classList.add('mui-hidden');
+				} else if(cid == "05") {
+					mui("#contactId")[0].classList.add('mui-hidden');
+					mui("#orgId")[0].classList.remove('mui-hidden');
+				} else {
+					mui("#contactId")[0].classList.add('mui-hidden');
+					mui("#orgId")[0].classList.add('mui-hidden');
+					var data = {
+						fenlei: cid,
+						pageSize: pageSize,
+						pageNo: 1
+					}
+					var w = plus.nativeUI.showWaiting("加载中...")
+					news.items = [];
+					mui.ajax(baserUrl + curl, {
+						data: data,
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 5000, //超时时间设置为5秒；
+						success: function(rsp) {
+							pageNum = 1;
+							if(rsp && rsp.length > 0) {
+								if(rsp[0].code == 200) {
+									var datas = rsp[0].appMsg;
+									if(datas) {
+										convert(datas).forEach(function(item) {
+											news.items.push(item);
+										});
+									}
 								}
 							}
+							mui('#list').pullRefresh().endPullupToRefresh();
+							w.close();
+						},
+						error: function(xhr, type, errorThrown) {
+							w.close();
 						}
-						if(news.items.length == 0) {
-							plus.nativeUI.toast("无信息", {
-								"align": "center",
-								"verticalAlign": "center"
-							})
-						}
-						mui('#list').pullRefresh().endPullupToRefresh();
-						w.close();
-					},
-					error: function(xhr, type, errorThrown) {
-						w.close();
-					}
-				})
+					})
+				}
 			});
 		</script>
 	</body>

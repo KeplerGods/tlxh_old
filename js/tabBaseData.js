@@ -1,4 +1,14 @@
 tabsName = [{
+	id: "10",
+	name: "首页",
+	show: true,
+	curl: "/appData",
+	childs: [{
+		id: "10",
+		show: true,
+		name: "热点"
+	}]
+}, {
 	id: "01",
 	name: "关于协会",
 	show: true,
@@ -19,6 +29,10 @@ tabsName = [{
 		id: "04",
 		show: true,
 		name: "联系我们"
+	}, {
+		id: "05",
+		show: true,
+		name: "协会结构"
 	}]
 }, {
 	id: "0",
@@ -202,67 +216,67 @@ tabsName = [{
 	childs: [{
 			id: "229",
 			show: true,
-			name: "规划咨询   "
+			name: "规划咨询"
 		},
 		{
 			id: "230",
 			show: true,
-			name: "工程咨询   "
+			name: "工程咨询"
 		},
 		{
 			id: "231",
 			show: true,
-			name: "管理咨询    "
+			name: "管理咨询"
 		},
 		{
 			id: "232",
 			show: true,
-			name: "政治咨询    "
+			name: "政治咨询"
 		},
 		{
 			id: "233",
 			show: true,
-			name: "项目审查评估 "
+			name: "项目审查评估"
 		},
 		{
 			id: "234",
 			show: true,
-			name: "教育培训    "
+			name: "教育培训"
 		},
 		{
 			id: "235",
 			show: true,
-			name: "国际交流    "
+			name: "国际交流"
 		},
 		{
 			id: "236",
 			show: true,
-			name: "专家委员会  "
+			name: "专家委员会"
 		},
 		{
 			id: "237",
 			show: true,
-			name: "专家带头人  "
+			name: "专家带头人"
 		},
 		{
 			id: "238",
 			show: true,
-			name: "专家队伍    "
+			name: "专家队伍"
 		},
 		{
 			id: "239",
 			show: true,
-			name: "重大项目进展 "
+			name: "重大项目进展"
 		},
 		{
 			id: "240",
 			show: true,
-			name: "重大合作项目 "
+			name: "重大合作项目"
 		},
 		{
 			id: "241",
 			show: true,
-			name: "研究报告    "
+			name: "研究报告"
 		}
 	]
 }, {

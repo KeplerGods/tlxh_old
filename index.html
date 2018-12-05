@@ -122,10 +122,8 @@
 					<div :class="item.clzz" v-for="item in items"></div>
 				</div>
 			</div>
-			<div id="slider" class="mui-slider">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div id="tabMain" class="mui-scroll">
-					</div>
+			<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<div id="tabMain" class="mui-scroll">
 				</div>
 			</div>
 		</div>
@@ -231,12 +229,12 @@
 				mounted: function() {
 					var _seft = this;
 					//请求最新的banner
-					mui.getJSON(bannerUrl+"/Hdzs/appHdzsList", {}, function(rsp) {
+					mui.getJSON(bannerUrl + "/Hdzs/appHdzsList", {}, function(rsp) {
 						if(rsp && rsp.length > 0) {
 							// 清空历史
 							_seft.items = [];
 							if(rsp[0].code == "200") {
-								data=rsp[0].appMsg;
+								data = rsp[0].appMsg;
 								for(r in rsp[0].appMsg) {
 									var clzz = "mui-indicator";
 									if(r == 0) {
@@ -260,7 +258,6 @@
 					});
 				}
 			});
-
 			mui.plusReady(function() {
 				plus.navigator.closeSplashscreen();
 				plus.navigator.setFullscreen(false);
