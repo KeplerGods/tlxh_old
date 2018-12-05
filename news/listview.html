@@ -90,7 +90,7 @@
 			}
 			document.getElementById("subTabMain").innerHTML = tabHtml;
 			var pageNum = 1;
-			var pageSize = 5;
+			var pageSize = 10;
 			var webview_detail = null; //详情页webview
 			var news = new Vue({
 				el: '#news',
@@ -128,7 +128,6 @@
 			 *  下拉刷新获取最新列表 
 			 */
 			function pulldownRefresh() {
-
 				if(window.plus && plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
 					plus.nativeUI.toast('似乎已断开与互联网的连接', {
 						verticalAlign: 'top'
@@ -141,23 +140,38 @@
 					pageSize: pageSize,
 					pageNo: 1
 				}
-
-				//请求最新列表信息流
-				mui.getJSON(baserUrl + curl, data, function(rsp) {
-					// 清空历史
-					news.items = [];
-					// 因为请求最新的就是请求第一页，所有需要重置页码为第2页给请求历史使用
-					pageNum = 2;
-					if(rsp && rsp.length > 0) {
-						if(rsp[0].code == 200) {
-							var datas = rsp[0].appMsg;
-							if(datas) {
-								news.items = convert(datas);
+				// 清空历史
+				news.items = [];
+				var w = plus.nativeUI.showWaiting("加载中...")
+				mui.ajax(baserUrl + curl, {
+					data: data,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 5000, //超时时间设置为5秒；
+					success: function(rsp) {
+						// 因为请求最新的就是请求第一页，所有需要重置页码为第2页给请求历史使用
+						pageNum = 2;
+						if(rsp && rsp.length > 0) {
+							if(rsp[0].code == 200) {
+								var datas = rsp[0].appMsg;
+								if(datas) {
+									news.items = convert(datas);
+								}
 							}
 						}
+						if(news.items.length == 0) {
+							plus.nativeUI.toast("无信息", {
+								"align": "center",
+								"verticalAlign": "center"
+							})
+						}
+						w.close();
+						mui('#list').pullRefresh().endPulldownToRefresh();
+					},
+					error: function(xhr, type, errorThrown) {
+						w.close();
 					}
-					mui('#list').pullRefresh().endPulldownToRefresh();
-				});
+				})
 			}
 
 			/**
@@ -175,22 +189,37 @@
 					pageSize: pageSize,
 					pageNo: pageNum
 				}
-
-				//请求历史列表信息流
-				mui.getJSON(baserUrl + curl, data, function(rsp) {
-					if(rsp && rsp.length > 0) {
-						if(rsp[0].code == 200) {
-							var datas = rsp[0].appMsg;
-							if(datas) {
-								pageNum++;
-								convert(datas).forEach(function(item) {
-									news.items.push(item);
-								});
+				var w = plus.nativeUI.showWaiting("加载中...")
+				mui.ajax(baserUrl + curl, {
+					data: data,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 5000, //超时时间设置为5秒；
+					success: function(rsp) {
+						if(rsp && rsp.length > 0) {
+							if(rsp[0].code == 200) {
+								var datas = rsp[0].appMsg;
+								if(datas) {
+									pageNum++;
+									convert(datas).forEach(function(item) {
+										news.items.push(item);
+									});
+								}
 							}
 						}
+						if(news.items.length == 0) {
+							plus.nativeUI.toast("无信息", {
+								"align": "center",
+								"verticalAlign": "center"
+							})
+						}
+						w.close();
+						mui('#list').pullRefresh().endPullupToRefresh();
+					},
+					error: function(xhr, type, errorThrown) {
+						w.close();
 					}
-					mui('#list').pullRefresh().endPullupToRefresh();
-				});
+				})
 			}
 
 			mui.plusReady(function() {
@@ -254,17 +283,21 @@
 			}
 
 			mui("#subTabMain").on("tap", ".mui-control-item", function(e) {
-				var cid = this.getAttribute("cid");
+				// TODO 这块可能有BUG
+				cid = this.getAttribute("cid");
 				var data = {
 					fenlei: cid,
 					pageSize: pageSize,
 					pageNo: 1
 				}
 				var w = plus.nativeUI.showWaiting("加载中...")
-				setTimeout(function() {
-					//请求历史列表信息流
-					mui.getJSON(baserUrl + curl, data, function(rsp) {
-						news.items = [];
+				news.items = [];
+				mui.ajax(baserUrl + curl, {
+					data: data,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 5000, //超时时间设置为5秒；
+					success: function(rsp) {
 						pageNum = 1;
 						if(rsp && rsp.length > 0) {
 							if(rsp[0].code == 200) {
@@ -276,10 +309,19 @@
 								}
 							}
 						}
+						if(news.items.length == 0) {
+							plus.nativeUI.toast("无信息", {
+								"align": "center",
+								"verticalAlign": "center"
+							})
+						}
 						mui('#list').pullRefresh().endPullupToRefresh();
 						w.close();
-					});
-				}, 100)
+					},
+					error: function(xhr, type, errorThrown) {
+						w.close();
+					}
+				})
 			});
 		</script>
 	</body>

@@ -39,6 +39,16 @@ tabsName = [{
 		name: "会展信息"
 	}]
 }, {
+	id: "4",
+	show: true,
+	name: "分支机构",
+	curl: "/appData",
+	childs: [{
+		id: "4",
+		show: true,
+		name: "分支机构"
+	}]
+}, {
 	id: "201",
 	show: true,
 	name: "党建工作",
@@ -311,22 +321,22 @@ tabsName = [{
 		curl: "/yunshu/list",
 		show: true,
 		name: "运输企业"
-	},{
+	}, {
 		id: "sheji",
 		curl: "/sheji/list",
 		show: true,
 		name: "设计企业"
-	},{
+	}, {
 		id: "jianshe",
 		curl: "/jianshe/list",
 		show: true,
 		name: "建设企业"
-	},{
+	}, {
 		id: "touzi",
 		curl: "/touzi/list",
 		show: true,
 		name: "投资企业"
-	},{
+	}, {
 		id: "qita",
 		curl: "/qita/qitalist",
 		show: true,
@@ -381,8 +391,8 @@ function loadTab() {
 		var viewId = "view-" + i
 		var viewPage = "news/listview.html";
 		// 统计信息
-		if(tabsName[i - 1].id == "71"){
-			viewPage="news/statistics.html";
+		if(tabsName[i - 1].id == "71") {
+			viewPage = "news/statistics.html";
 		}
 		tabs.push({
 			id: viewId,
