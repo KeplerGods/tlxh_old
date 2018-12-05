@@ -148,10 +148,14 @@
 					return;
 				}
 				if(cid == "04") {
-
+					mui("#contactId")[0].classList.remove('mui-hidden');
+					mui("#orgId")[0].classList.add('mui-hidden');
 				} else if(cid == "05") {
-
+					mui("#contactId")[0].classList.add('mui-hidden');
+					mui("#orgId")[0].classList.remove('mui-hidden');
 				} else {
+					mui("#contactId")[0].classList.add('mui-hidden');
+					mui("#orgId")[0].classList.add('mui-hidden');
 					var data = {
 						fenlei: cid,
 						pageSize: pageSize,
@@ -198,10 +202,14 @@
 					return;
 				}
 				if(cid == "04") {
-
+					mui("#contactId")[0].classList.remove('mui-hidden');
+					mui("#orgId")[0].classList.add('mui-hidden');
 				} else if(cid == "05") {
-
+					mui("#contactId")[0].classList.add('mui-hidden');
+					mui("#orgId")[0].classList.remove('mui-hidden');
 				} else {
+					mui("#contactId")[0].classList.add('mui-hidden');
+					mui("#orgId")[0].classList.add('mui-hidden');
 					var data = {
 						fenlei: cid,
 						pageSize: pageSize,

@@ -137,7 +137,6 @@
 			var menu = null;
 			var _self = null;
 			var webview_detail = null; //详情页webview
-
 			var titleNView = { //详情页原生导航配置
 				backgroundColor: '#f7f7f7', //导航栏背景色
 				titleText: '', //导航栏标题
@@ -259,6 +258,7 @@
 				}
 			});
 			mui.plusReady(function() {
+				checkPay();
 				plus.navigator.closeSplashscreen();
 				plus.navigator.setFullscreen(false);
 				if(localStorage.getItem("closeStart") != "1") {
