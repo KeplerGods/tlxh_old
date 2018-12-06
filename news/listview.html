@@ -147,6 +147,8 @@
 					});
 					return;
 				}
+				// 清空历史
+				news.items = [];
 				if(cid == "04") {
 					mui("#contactId")[0].classList.remove('mui-hidden');
 					mui("#orgId")[0].classList.add('mui-hidden');
@@ -161,8 +163,6 @@
 						pageSize: pageSize,
 						pageNo: 1
 					}
-					// 清空历史
-					news.items = [];
 					var w = plus.nativeUI.showWaiting("加载中...")
 					mui.ajax(baserUrl + curl, {
 						data: data,
@@ -202,9 +202,11 @@
 					return;
 				}
 				if(cid == "04") {
+					news.items = [];
 					mui("#contactId")[0].classList.remove('mui-hidden');
 					mui("#orgId")[0].classList.add('mui-hidden');
 				} else if(cid == "05") {
+					news.items = [];
 					mui("#contactId")[0].classList.add('mui-hidden');
 					mui("#orgId")[0].classList.remove('mui-hidden');
 				} else {
@@ -306,6 +308,7 @@
 			mui("#subTabMain").on("tap", ".mui-control-item", function(e) {
 				// TODO 这块可能有BUG
 				cid = this.getAttribute("cid");
+				news.items = [];
 				if(cid == "04") {
 					mui("#contactId")[0].classList.remove('mui-hidden');
 					mui("#orgId")[0].classList.add('mui-hidden');
@@ -321,7 +324,6 @@
 						pageNo: 1
 					}
 					var w = plus.nativeUI.showWaiting("加载中...")
-					news.items = [];
 					mui.ajax(baserUrl + curl, {
 						data: data,
 						dataType: 'json', //服务器返回json格式数据

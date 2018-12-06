@@ -26,13 +26,13 @@ tabsName = [{
 		show: true,
 		name: "人才招聘"
 	}, {
-		id: "04",
-		show: true,
-		name: "联系我们"
-	}, {
 		id: "05",
 		show: true,
 		name: "协会结构"
+	}, {
+		id: "04",
+		show: true,
+		name: "联系我们"
 	}]
 }, {
 	id: "0",
@@ -290,11 +290,15 @@ tabsName = [{
 		name: "行业资讯"
 	}]
 }, {
-	id: "0",
+	id: "2",
 	show: true,
 	name: "会员专区",
 	curl: "/hyAppData",
 	childs: [{
+		id: "2",
+		show: true,
+		name: "会员简介"
+	}, {
 		id: "0",
 		show: true,
 		name: "会员风采"
@@ -302,10 +306,6 @@ tabsName = [{
 		id: "1",
 		show: true,
 		name: "会员活动"
-	}, {
-		id: "2",
-		show: true,
-		name: "会员简介"
 	}]
 }, {
 	id: "61",

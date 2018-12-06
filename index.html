@@ -100,27 +100,27 @@
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
 							<img :src="items[0].host + items[0].img" :clickUrl="items[0].host + items[0].clickUrl">
-							<p class="mui-slider-title">{{items[0].title}}</p>
+							<!--<p class="mui-slider-title">{{items[0].title}}</p>-->
 						</a>
 					</div>
 					<!-- 第一张 -->
 					<div class="mui-slider-item" v-for="item in items">
 						<a href="#">
 							<img :src="item.host + item.img" :data-guid="item.guid" @tap="open_detail(item)">
-							<p class="mui-slider-title">{{item.title}}</p>
+							<!--<p class="mui-slider-title">{{item.title}}</p>-->
 						</a>
 					</div>
 					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
 							<img :src="items[0].host + items[0].img" :clickUrl="items[0].host + items[0].clickUrl">
-							<p class="mui-slider-title">{{items[0].title}}</p>
+							<!--<p class="mui-slider-title">{{items[0].title}}</p>-->
 						</a>
 					</div>
 				</div>
-				<div class="mui-slider-indicator mui-text-right">
+				<!--<div class="mui-slider-indicator mui-text-right">
 					<div :class="item.clzz" v-for="item in items"></div>
-				</div>
+				</div>-->
 			</div>
 			<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 				<div id="tabMain" class="mui-scroll">
